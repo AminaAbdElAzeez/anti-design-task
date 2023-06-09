@@ -1,23 +1,36 @@
-import logo from './logo.svg';
 import './App.css';
+import {useLayoutEffect, useState} from 'react'
+import {Table, Divider } from 'antd'
+
+
 
 function App() {
+  const [users,setUsers]=useState([]);
+
+  useLayoutEffect(()=>{
+    fetch("https://jsonplaceholder.typicode.com/users")
+    .then((res)=>res.json())
+    .then((res)=>setUsers(res))
+  },[])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <Divider>Middle Size Table</Divider>
+        <Table dataSource={users} size="middle">
+          <column title="First Name" dataIndex='name' key="name" />
+          <column title="Age" dataIndex='id' key="id" />
+          <column title=" Address" dataIndex='username' key="username" />
+        </Table>
+      </div>
+      <div>
+        <Divider>Small Size Table</Divider>
+        <Table dataSource={users} size="small">
+          <column title="First Name" dataIndex='name' key="name" />
+          <column title="Age" dataIndex='id' key="id" />
+          <column title=" Address" dataIndex='username' key="username" />
+        </Table>
+      </div>
     </div>
   );
 }
